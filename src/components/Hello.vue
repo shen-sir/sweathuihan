@@ -2,6 +2,17 @@
   <div class="hello">
     <div class="search">
       <input placeholder="查找附近场馆" type="text">
+      <img src="../assets/search.png">
+    </div>
+    <div class="contain">
+      <img src="../assets/info.jpg" >
+      <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
+      <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
+    </div>
+    <div class="contain">
+      <img src="../assets/info.jpg" >
+      <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
+      <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
     </div>
   </div>
 </template>
@@ -20,8 +31,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped >
 div.hello{
-  border: 1px solid red;
+  /*border: 1px solid red;*/
   height: 100%;
+  background: #ededed;
   .search{
     width: 100%;
     height: .35rem;
@@ -30,10 +42,50 @@ div.hello{
     input{
       width: 80%;
       background: #ededed;
-      border: 1px solid black;
+      border: 0;
       margin-top: .06rem;
       margin-left: .09rem;
       text-align: center;
+      vertical-align:super;
+    }
+    img{
+      height: .22rem;
+    }
+  }
+  .contain{
+    font-size: .15rem;
+    background: white;
+    padding-bottom: .1rem;
+    margin-bottom: .1rem;
+    img{
+      width: 100%;
+    }
+    p,.tag{
+      padding: 0 .20rem;
+    }
+    .name{
+      .km{
+        float: right;
+      }
+      .one{
+        background: #cccccc;
+        padding: 0px 3px;
+        color: white;
+        margin-left: .1rem;
+        /*float: right;*/
+      }
+      .two{
+        background: #00d2ff;
+        color: white;
+        /*float: right;*/
+        padding: 0px 3px;
+      }
+    }
+    .price{
+      padding-top: .05rem;
+      span{
+        color: #999999;
+      }
     }
   }
 }
