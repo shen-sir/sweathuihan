@@ -4,16 +4,16 @@
       <input placeholder="查找附近场馆" type="text">
       <img src="../assets/search.png">
     </div>
-    <div class="contain">
-      <img src="../assets/info.jpg" >
-      <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
-      <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
-    </div>
-    <div class="contain">
-      <img src="../assets/info.jpg" >
-      <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
-      <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
-    </div>
+    
+      <div v-for="item in items" :key="item.id" class="contain">
+        <router-link   :to="{ path: '/details' }">
+          <img src="../assets/info.jpg" >
+        </router-link>
+        <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
+        <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
+      </div>
+    
+    
   </div>
 </template>
 
@@ -22,7 +22,17 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      items: [
+        {
+          id:1
+        },
+        {
+          id:2
+        },
+        {
+          id:3
+        }
+      ]
     }
   }
 }
