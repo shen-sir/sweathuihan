@@ -40,7 +40,7 @@ export default {
 <style lang='less' scoped >
 div.container{
   p{
-    padding: .05rem 0;
+    padding: .05rem 0.2rem;
   }
   /*border: 1px solid red;*/
   height: 100%;
@@ -75,13 +75,16 @@ div.container{
   }
   .price{
     text-align: center;
+    font-size: .25rem;
   }
   .reward{
     text-align: center;
     span{
-      border: 1px solid yellow;
+      border: 1px solid #ff8e44;
       display: inline-block;
       margin: 0 auto;
+      color: #ff8e44;
+      padding: 0 .1rem;
     }
     
   }
