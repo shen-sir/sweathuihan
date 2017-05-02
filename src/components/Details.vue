@@ -19,7 +19,9 @@
     <br>3.在您未验证健身卡之前可以随时退款
     <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 
     </p>
-    <div class="btn">开始挥汗</div>
+    <router-link   :to="{ path: '/pay' }">
+      <div class="btn">开始挥汗</div>
+    </router-link>
   </div>
   </div>
   
