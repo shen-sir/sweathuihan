@@ -5,12 +5,12 @@
       <img src="../assets/search.png">
     </div>
     
-      <div v-for="item in items" :key="item.id" class="contain">
+      <div v-for="item in list"  class="contain">
         <router-link   :to="{ path: '/details' }">
-          <img src="../assets/info.jpg" >
+        <img src="../assets/info.jpg" >
         </router-link>
-        <p class="name">望京凯德mall乐健身<span class="km">3.7km</span><span class="one">商圈</span><span class="two">泳</span></p>
-        <p class="price">￥1800 <span>每次奖励7.8元</span>  </p>
+        <p class="name">{{item.name}}<span class="km">3.7km</span><span class="one">{{item.location}}</span><span class="two">泳</span></p>
+        <p class="price">￥{{item.money}} <span>每次奖励7.8元</span>  </p>
       </div>
     
     
@@ -20,20 +20,16 @@
 <script>
 export default {
   name: 'hello',
+  props: ['list'],
   data () {
     return {
       items: [
-        {
-          id:1
-        },
-        {
-          id:2
-        },
-        {
-          id:3
-        }
+        
       ]
     }
+  },
+  created(){
+    console.log(this.list)
   }
 }
 </script>
