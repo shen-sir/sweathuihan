@@ -3,8 +3,8 @@
     <div class="top">
       <img src="../assets/info.jpg" class="left">
       <div class="right">
-        <p class="name">凯德mall健身</p>
-        <p class="price">￥1800</p><span>每次奖励7.8元</span>
+        <p class="name">{{this.$route.query.info.name}}</p>
+        <p class="price">￥{{this.$route.query.info.money}}</p><span>每次奖励{{this.$route.query.info.daymoney}}元</span>
       </div>
     </div>
     <div class="context">
@@ -13,7 +13,7 @@
         <br>2.凭验证码到对应场馆换取您的健身卡
         <br>3.在您未验证健身卡之前可以随时退款
         <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 </p>
-        <p class="tel">13788888888</p>
+        <p class="tel">{{this.$route.query.info.phone}}</p>
     </div>
     <div class="inp">
       <div class="line">
@@ -32,18 +32,11 @@ export default {
   name: 'pay',
   data () {
     return {
-      items: [
-        {
-          id:1
-        },
-        {
-          id:2
-        },
-        {
-          id:3
-        }
-      ]
+      items: []
     }
+  },
+  created(){
+    console.log(this.$route)
   }
 }
 </script>

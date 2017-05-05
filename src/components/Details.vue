@@ -3,15 +3,15 @@
     <div class="slider">
       <img v-for="item in imgs" src="../assets/info.jpg">
     </div>
-    <p class="name">望京健身</p>
+    <p class="name">{{this.$route.query.name}}</p>
     <div class="tag">
       <span class="one">望京</span>
       <span class="two">泳</span>
     </div>
-    <p class="price">￥1800</p>
-    <p class="reward"><span>每次奖励7.8元</span></p>
-    <p class="position"><span></span>海淀区知春路</p>
-    <p class="tel">13888888888</p>
+    <p class="price">￥{{this.$route.query.money}}</p>
+    <p class="reward"><span>每次奖励{{this.$route.query.daymoney}}元</span></p>
+    <p class="position"><span></span>{{this.$route.query.location}}</p>
+    <p class="tel">{{this.$route.query.phone}}</p>
     <div class="des">
     <p class="titel">使用说明</p>
     <p class="text">1.完成购买后，您将收到确认信息和验证码
@@ -19,7 +19,7 @@
     <br>3.在您未验证健身卡之前可以随时退款
     <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 
     </p>
-    <router-link   :to="{ path: '/pay' }">
+    <router-link   :to="{ path: '/pay',query:{info:this.$route.query} }">
       <div class="btn">开始挥汗</div>
     </router-link>
   </div>
@@ -32,8 +32,11 @@ export default {
   name: 'details',
   data () {
     return {
-      imgs: [1,2,3,4]
+      imgs: JSON.parse(this.$route.query.imgs)
     }
+  },
+  created(){
+    console.log(this.$route)
   }
 }
 </script>

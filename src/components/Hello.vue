@@ -6,11 +6,12 @@
     </div>
     
       <div v-for="item in list"  class="contain">
-        <router-link   :to="{ path: '/details' }">
+        <router-link   :to="{ path: '/details', query: { name: item.name, money:item.money,daymoney:(Math.floor(item.money)/365).toFixed(2),location: item.location,phone:item.phone,imgs:item.pic}}">
         <img src="../assets/info.jpg" >
         </router-link>
-        <p class="name">{{item.name}}<span class="km">3.7km</span><span class="one">{{item.location}}</span><span class="two">泳</span></p>
-        <p class="price">￥{{item.money}} <span>每次奖励7.8元</span>  </p>
+        <p class="name">{{item.name}}<span class="km">{{ (Math.floor(item.distance)/1000).toFixed(2)}}km</span><span class="one">{{item.location}}</span>
+        <!-- <span class="two">泳</span> --></p>
+        <p class="price">￥{{item.money}} <span>每次奖励{{(Math.floor(item.money)/365).toFixed(2)}}元</span>  </p>
       </div>
     
     
