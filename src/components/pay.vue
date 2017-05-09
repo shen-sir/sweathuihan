@@ -18,9 +18,9 @@
     <div class="inp">
       <div class="line">
         <p>手机号</p><input placeholder="请输入手机号" type="text">
-        <input class="btn" value="获取验证码" type="button">
+        <input @click="msgcode" class="btn" value="获取验证码" type="button">
         <br> 
-        <p>验证码</p><input placeholder="请输入验证码" type="text">
+        <p>验证码</p><input v-model="tel" placeholder="请输入验证码" type="text">
       </div>
     </div>
     <div class="pay">微信支付</div>
@@ -32,7 +32,21 @@ export default {
   name: 'pay',
   data () {
     return {
+      tel:'',
       items: []
+    }
+  },
+  methods:{
+    msgcode(){
+      this.$http.get('http://www.sweathuihan.com:8080/api/sendCode?phone='+this.tel).then(response => {
+        // get body data
+        // this.someData = response.body;
+        console.log(response)
+
+      }, response => {
+        // error callback
+        alert('失败')
+      });
     }
   },
   created(){

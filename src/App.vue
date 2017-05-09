@@ -26,11 +26,11 @@ export default {
       map.addOverlay(mk);
       map.panTo(r.point);
       // alert('您的位置：'+r.point.lng+','+r.point.lat);
-      that.$http.get('http://www.sweathuihan.com/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
+      that.$http.get('http://www.sweathuihan.com:8080/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
         // get body data
         // this.someData = response.body;
         that.list = response.body.data.venues;
-        console.log(response)
+        // console.log(response)
 
       }, response => {
         // error callback
@@ -53,20 +53,23 @@ export default {
   //BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
   //
   //微信config
-  this.$http.get('http://www.sweathuihan.com/wx/config?url=www.sweathuihan.com').then(response => {
+  this.$http.get('http://www.sweathuihan.com:8080/wx/config?url=www.sweathuihan.com').then(response => {
         // get body data
         // this.someData = response.body;
         // that.list = response.body.data.venues;
         console.log(response)
+        var resbody = JSON.parse(response.body)
+        console.log(resbody)
 
-        /*wx.config({
+        wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: 'wxbde5addacdc4f255', // 必填，公众号的唯一标识
-            timestamp: , // 必填，生成签名的时间戳
-            nonceStr: '', // 必填，生成签名的随机串
-            signature: '',// 必填，签名，见附录1
-            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-        });*/
+            timestamp: resbody.timestamp, // 必填，生成签名的时间戳
+            nonceStr: resbody.nonceStr, // 必填，生成签名的随机串
+            signature: resbody.signature,// 必填，签名，见附录1
+            jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            //朋友圈，微信朋友，QQ空间
+        });
 
       }, response => {
         // error callback
