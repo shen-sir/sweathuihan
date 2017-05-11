@@ -13,7 +13,26 @@ export default {
       list:null
     }
   },
+  beforeCreate(){
+    
+    this.$http.get('http://www.sweathuihan.com/wx/code?code='+window.location.href.split('code=')[1].split('&')[0]).then(response => {
+        // get body data
+        // this.someData = response.body;
+        console.log(response)
+        // location.href = 'http://sweathuihan.com/dist/index.html';
+        // localStorage.setItem('openid',)
+
+      }, response => {
+        // error callback
+        alert('失败')
+      });
+    
+  },
   created(){
+  // console.log(localStorage.code)
+
+
+
     // 百度地图API功能
   var map = new BMap.Map("allmap");
   var point = new BMap.Point(116.331398,39.897445);
@@ -26,7 +45,7 @@ export default {
       map.addOverlay(mk);
       map.panTo(r.point);
       // alert('您的位置：'+r.point.lng+','+r.point.lat);
-      that.$http.get('http://www.sweathuihan.com:8080/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
+      that.$http.get('http://www.sweathuihan.com/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
         // get body data
         // this.someData = response.body;
         that.list = response.body.data.venues;
@@ -53,7 +72,7 @@ export default {
   //BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
   //
   //微信config
-  this.$http.get('http://www.sweathuihan.com:8080/wx/config?url=www.sweathuihan.com').then(response => {
+  this.$http.get('http://sweathuihan.com/wx/config?url='+encodeURIComponent(window.location.href)).then(response => {
         // get body data
         // this.someData = response.body;
         // that.list = response.body.data.venues;

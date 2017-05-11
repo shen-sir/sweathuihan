@@ -17,10 +17,10 @@
     </div>
     <div class="inp">
       <div class="line">
-        <p>手机号</p><input placeholder="请输入手机号" type="text">
+        <p>手机号</p><input v-model="tel" placeholder="请输入手机号" type="text">
         <input @click="msgcode" class="btn" value="获取验证码" type="button">
         <br> 
-        <p>验证码</p><input v-model="tel" placeholder="请输入验证码" type="text">
+        <p>验证码</p><input  placeholder="请输入验证码" type="text">
       </div>
     </div>
     <div class="pay">微信支付</div>
@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     msgcode(){
-      this.$http.get('http://www.sweathuihan.com:8080/api/sendCode?phone='+this.tel).then(response => {
+      this.$http.get('http://www.sweathuihan.com/api/sendCode?phone='+this.tel).then(response => {
         // get body data
         // this.someData = response.body;
         console.log(response)
@@ -73,6 +73,7 @@ div.contain{
       float: left;
     }
     .right{
+      width: 1.95rem;
       display: inline-block;
       margin-top: .15rem;
       margin-left: .10rem;
