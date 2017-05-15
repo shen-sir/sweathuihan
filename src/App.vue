@@ -17,10 +17,10 @@ export default {
     
     this.$http.get('http://www.sweathuihan.com/wx/code?code='+window.location.href.split('code=')[1].split('&')[0]).then(response => {
         // get body data
-        // this.someData = response.body;
+        console.log('========================')
         console.log(response)
-        // location.href = 'http://sweathuihan.com/dist/index.html';
-        // localStorage.setItem('openid',)
+        localStorage.openId = response.body;
+        console.log('========================')
 
       }, response => {
         // error callback
@@ -29,7 +29,6 @@ export default {
     
   },
   created(){
-  // console.log(localStorage.code)
 
 
 

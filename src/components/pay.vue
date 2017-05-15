@@ -20,10 +20,11 @@
         <p>手机号</p><input v-model="tel" placeholder="请输入手机号" type="text">
         <input @click="msgcode" class="btn" value="获取验证码" type="button">
         <br> 
-        <p>验证码</p><input  placeholder="请输入验证码" type="text">
+        <p>验证码</p><input v-model="code"  placeholder="请输入验证码" type="text">
+        <input @click="verification" class="btn" value="提交" type="button">
       </div>
     </div>
-    <div class="pay">微信支付</div>
+    <div @click="pay" class="pay">微信支付</div>
   </div>
 </template>
 
@@ -32,17 +33,52 @@ export default {
   name: 'pay',
   data () {
     return {
-      tel:'',
+      tel:'',//手机号
+      code:'',//验证码
       items: []
     }
   },
   methods:{
+    // 发送验证码
     msgcode(){
-      this.$http.get('http://www.sweathuihan.com/api/sendCode?phone='+this.tel).then(response => {
+      this.$http.get('http://www.sweathuihan.com/api/sendCode?phone='+this.tel + '&openId=' +localStorage.openId).then(response => {
         // get body data
         // this.someData = response.body;
         console.log(response)
 
+      }, response => {
+        // error callback
+        alert('失败')
+      });
+    },
+    //提交验证码
+    verification(){
+      this.$http.get('http://www.sweathuihan.com/api/register?phone='+this.tel + '&code=' + this.code + '&openId=' +localStorage.openId).then(response => {
+        // get body data
+        // this.someData = response.body;
+        console.log(response)
+
+      }, response => {
+        // error callback
+        alert('失败')
+      });
+    },
+    pay(){
+      this.$http.get('http://www.sweathuihan.com/wx/pay?vid='+this.$route.query.info.vid + '&openId=' +localStorage.openId).then(response => {
+        // get body data
+        // this.someData = response.body;
+        console.log(response.body.data.result)
+        wx.chooseWXPay({
+            timestamp: response.body.data.result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: response.body.data.result.nonceStr, // 支付签名随机串，不长于 32 位
+            package: response.body.data.result.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+            signType: response.body.data.result.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: response.body.data.result.paySign, // 支付签名
+            success: function (res) {
+                // 支付成功后的回调函数
+                console.log(res)
+            }
+        });
       }, response => {
         // error callback
         alert('失败')
