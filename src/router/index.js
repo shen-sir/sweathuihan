@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 import details from '@/components/Details'
 import pay from '@/components/pay'
+import personal from '@/components/personal'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/pay',
       name: 'pay',
       component: pay
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component: personal
     }
   ]
 })
