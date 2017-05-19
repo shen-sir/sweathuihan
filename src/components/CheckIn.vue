@@ -11,23 +11,23 @@
         </div>
         <div class="num">
           <div class="tex">
-          <img class="icon" src="../assets/u1.png" >
-          <p class="tit">运动时间</p>
-          <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
-        </div>
-        <div class="tex">
-          <img class="icon" src="../assets/u2.png" >
-          <p class="tit">燃烧卡路里</p>
-          <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
-        </div>
-        <div class="tex">
-          <img class="icon" src="../assets/u3.png" >
-          <p class="tit">赚取金钱</p>
-          <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
-        </div>
+            <img class="icon" src="../assets/u1.png" >
+            <p class="tit">运动时间</p>
+            <img class="line" src="../assets/line.png" >
+            <p><strong>362</strong>/min</p>
+          </div>
+          <div class="tex">
+            <img class="icon" src="../assets/u2.png" >
+            <p class="tit">燃烧卡路里</p>
+            <img class="line" src="../assets/line.png" >
+            <p><strong>362</strong>/min</p>
+          </div>
+          <div class="tex">
+            <img class="icon" src="../assets/u3.png" >
+            <p class="tit">赚取金钱</p>
+            <img class="line" src="../assets/line.png" >
+            <p><strong>362</strong>/min</p>
+          </div>
         </div>
       </div>
     </div>

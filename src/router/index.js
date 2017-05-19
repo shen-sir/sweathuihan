@@ -5,6 +5,7 @@ import details from '@/components/Details'
 import pay from '@/components/pay'
 import personal from '@/components/personal'
 import CheckIn from '@/components/CheckIn'
+import CheckOut from '@/components/CheckOut'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/CheckIn',
       name: 'CheckIn',
       component: CheckIn
+    },
+    {
+      path: '/CheckOut',
+      name: 'CheckOut',
+      component: CheckOut
     }
   ]
 })
