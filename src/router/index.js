@@ -6,6 +6,8 @@ import pay from '@/components/pay'
 import personal from '@/components/personal'
 import CheckIn from '@/components/CheckIn'
 import CheckOut from '@/components/CheckOut'
+import share from '@/components/share'
+import success from '@/components/success'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
       path: '/CheckOut',
       name: 'CheckOut',
       component: CheckOut
+    },
+    {
+      path: '/share',
+      name: 'share',
+      component: share
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: success
     }
   ]
 })
