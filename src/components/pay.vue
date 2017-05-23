@@ -45,6 +45,9 @@ export default {
         // get body data
         // this.someData = response.body;
         console.log(response)
+        if(response.code=='-12'){
+          alert('您已注册，直接点击微信即可')
+        }
 
       }, response => {
         // error callback
