@@ -1,28 +1,29 @@
 <template>
   <div class="container">
     <div class="slider">
-      <img v-for="item in imgs" src="../assets/info.jpg">
+      <img v-for="item in this.$route.query.imgs" :src="'http://upload.sweathuihan.com/'+item">
     </div>
     <p class="name">{{this.$route.query.name}}</p>
-    <div class="tag">
+    <!-- <div class="tag">
       <span class="one">望京</span>
       <span class="two">泳</span>
-    </div>
+    </div> -->
     <p class="price">￥{{this.$route.query.money}}</p>
     <p class="reward"><span>每次奖励{{this.$route.query.daymoney}}元</span></p>
     <p class="position"><span></span>{{this.$route.query.location}}</p>
     <p class="tel">{{this.$route.query.phone}}</p>
     <div class="des">
-    <p class="titel">使用说明</p>
-    <p class="text">1.完成购买后，您将收到确认信息和验证码
-    <br>2.凭验证码到对应场馆换取您的健身卡
-    <br>3.在您未验证健身卡之前可以随时退款
-    <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 
-    </p>
+      <p class="titel">使用说明</p>
+      <p class="text">1.完成购买后，您将收到确认信息和验证码
+      <br>2.凭验证码到对应场馆换取您的健身卡
+      <br>3.在您未验证健身卡之前可以随时退款
+      <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 
+      </p>
+      
+    </div>
     <router-link   :to="{ path: '/pay',query:{info:this.$route.query} }">
       <div class="btn">开始挥汗</div>
     </router-link>
-  </div>
   </div>
   
 </template>
@@ -56,6 +57,7 @@ div.container{
     height: 2.23rem;
     img{
       width: 100%;
+      height: 2.23rem;
       position: absolute;
     }
   }

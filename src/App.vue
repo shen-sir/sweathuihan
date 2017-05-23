@@ -46,8 +46,12 @@ export default {
       // alert('您的位置：'+r.point.lng+','+r.point.lat);
       that.$http.get('http://www.sweathuihan.com/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
         // get body data
+        var res = response.body.data.venues;
+        for(var i=0;i<res.length;i++){
+          res[i].pic = JSON.parse(res[i].pic);
+        }
         // this.someData = response.body;
-        that.list = response.body.data.venues;
+        that.list = res;
         // console.log(response)
 
       }, response => {
@@ -118,16 +122,16 @@ p{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height:  100%;
-  /*text-align: center;*/
-  /*color: #2c3e50;*/
-  /*margin-top: 60px;*/
+  /*border:2px solid red;*/
 }
 html{
   font-size: calc(100vw/3.75);
   height: 100%;
+  /*background-color: red;*/
 }
 body{
   font-size: 0.15rem;
   height: 100%;
+  /*background-color: blue;*/
 }
 </style>

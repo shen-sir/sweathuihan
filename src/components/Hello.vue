@@ -7,9 +7,9 @@
     
       <div v-for="item in list"  class="contain">
         <router-link   :to="{ path: '/details', query: { vid:item.vid,name: item.name, money:item.money,daymoney:(Math.floor(item.money)/365).toFixed(2),location: item.location,phone:item.phone,imgs:item.pic}}">
-        <img src="../assets/info.jpg" >
+        <img :src="'http://upload.sweathuihan.com/'+ item.pic[0]" >
         </router-link>
-        <p class="name">{{item.name}}<span class="km">{{ (Math.floor(item.distance)/1000).toFixed(2)}}km</span><span class="one">{{item.location}}</span>
+        <p class="name">{{item.name}}<span class="km">{{ (Math.floor(item.distance)/1000).toFixed(2)}}km</span><!-- <span class="one">{{item.location}}</span> -->
         <!-- <span class="two">泳</span> --></p>
         <p class="price">￥{{item.money}} <span>每次奖励{{(Math.floor(item.money)/365).toFixed(2)}}元</span>  </p>
       </div>
@@ -66,6 +66,7 @@ div.hello{
     margin-bottom: .1rem;
     img{
       width: 100%;
+      height: 2.23rem;
     }
     p,.tag{
       padding: 0 .20rem;

@@ -1,7 +1,7 @@
 <template>
   <div class="contain">
     <div class="top">
-      <img src="../assets/info.jpg" class="left">
+      <img :src="'http://upload.sweathuihan.com/'+this.$route.query.info.imgs[0]" class="left">
       <div class="right">
         <p class="name">{{this.$route.query.info.name}}</p>
         <p class="price">￥{{this.$route.query.info.money}}</p><span>每次奖励{{this.$route.query.info.daymoney}}元</span>
@@ -64,6 +64,7 @@ export default {
       });
     },
     pay(){
+      var that = this;
       this.$http.get('http://www.sweathuihan.com/wx/pay?vid='+this.$route.query.info.vid + '&openId=' +localStorage.openId).then(response => {
         // get body data
         // this.someData = response.body;
@@ -77,6 +78,14 @@ export default {
             success: function (res) {
                 // 支付成功后的回调函数
                 console.log(res)
+                that.$http.get('http://www.sweathuihan.com/callback/'+response.body.data.outer_id).then(response => {
+                  // get body data
+                  console.log(response)
+
+                }, response => {
+                  // error callback
+                  alert('失败')
+                });
             }
         });
       }, response => {

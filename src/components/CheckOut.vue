@@ -62,7 +62,7 @@ export default {
   }
   .icon{
     .tex{
-        /*overflow-x: hidden;*/
+        overflow-x: hidden;
         width: 32.1%;
         height: 1.1rem;
         display: inline-block;
