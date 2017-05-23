@@ -44,6 +44,10 @@ export default {
       map.addOverlay(mk);
       map.panTo(r.point);
       // alert('您的位置：'+r.point.lng+','+r.point.lat);
+      window.$potision={
+        lng:r.point.lng,
+        lat:r.point.lat
+      };
       that.$http.get('http://www.sweathuihan.com/api/nearby?currentLng='+r.point.lng+'&currentLat='+r.point.lat).then(response => {
         // get body data
         var res = response.body.data.venues;

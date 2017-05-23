@@ -4,29 +4,29 @@
       <img class="top" src="../assets/p1.png" alt="">
       <div class="bottom">
         <div class="time">
-          <h1>00:01:21<span></span></h1>
+          <h1>{{hour}}:{{min}}:{{second}}<span></span></h1>
         </div>
         <div class="kll">
-          <p><span class="fire"></span>燃烧卡路里<span class="line2"></span><strong>362</strong>/Kcal</p>
+          <p><span class="fire"></span>燃烧卡路里<span class="line2"></span><strong>{{Kcal}}</strong>/Kcal</p>
         </div>
         <div class="num">
           <div class="tex">
             <img class="icon" src="../assets/u1.png" >
             <p class="tit">运动时间</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{allmin}}</strong>/Min</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u2.png" >
             <p class="tit">燃烧卡路里</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{Kcal}}</strong>/Kcal</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u3.png" >
             <p class="tit">赚取金钱</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{money}}</strong>/Rmb</p>
           </div>
         </div>
       </div>
@@ -40,27 +40,111 @@ export default {
   name: 'CheckIn',
   data () {
     return {
+      hour:0,
+      min:0,
+      second:0,
+      Kcal:0,
+      allmin:0,
+      money:0
 
     }
   },
+  watch:{
+   second (val) {
+    var that = this;
+      this.Kcal++;
+      if(val == 60){
+        // alert('aaaaaa')
+        this.second = 0;
+        this.min++;
+        this.allmin++;
+        this.money++;
+      }
+    },
+    min (val) {
+      if(val == 60){
+        this.hour++;
+        this.min = 0;
+      }
+    }
+  },
   beforeCreate(){
-    this.$http.get('http://www.sweathuihan.com/wx/code?code='+window.location.href.split('code=')[1].split('&')[0]).then(response => {
+    var that = this;
+
+    // 百度地图API功能
+  var map = new BMap.Map("allmap");
+  var point = new BMap.Point(116.331398,39.897445);
+  map.centerAndZoom(point,12);
+  var that = this;
+  var geolocation = new BMap.Geolocation();
+  geolocation.getCurrentPosition(function(r){
+    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+      var mk = new BMap.Marker(r.point);
+      map.addOverlay(mk);
+      map.panTo(r.point);
+      // alert('您的位置：'+r.point.lng+','+r.point.lat);
+      
+      window.$potision={
+        lng:r.point.lng,
+        lat:r.point.lat
+      };
+      console.log($potision)
+
+      that.$http.get('http://www.sweathuihan.com/api/checkIn?currentLng='+r.point.lng + '&currentLat='+r.point.lat + '&openId='+localStorage.openId).then(response => {
         // get body data
         console.log('==========CheckIn==============')
         console.log(response)
-        localStorage.openId = response.body;
-        console.log('============CheckIn============')
+        console.log('==========CheckIn==============')
 
       }, response => {
         // error callback
-        alert('失败')
+        // alert('失败')
       });
+
+
+    }
+    else {
+      alert('failed'+this.getStatus());
+    }        
+  },{enableHighAccuracy: true})
+  //关于状态码
+  //BMAP_STATUS_SUCCESS 检索成功。对应数值“0”。
+  //BMAP_STATUS_CITY_LIST 城市列表。对应数值“1”。
+  //BMAP_STATUS_UNKNOWN_LOCATION  位置结果未知。对应数值“2”。
+  //BMAP_STATUS_UNKNOWN_ROUTE 导航结果未知。对应数值“3”。
+  //BMAP_STATUS_INVALID_KEY 非法密钥。对应数值“4”。
+  //BMAP_STATUS_INVALID_REQUEST 非法请求。对应数值“5”。
+  //BMAP_STATUS_PERMISSION_DENIED 没有权限。对应数值“6”。(自 1.1 新增)
+  //BMAP_STATUS_SERVICE_UNAVAILABLE 服务不可用。对应数值“7”。(自 1.1 新增)
+  //BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
+  //
+  //
+  //
+    
   },
   methods:{
     
   },
   created(){
+    var that = this;
+      function incrementNumber() {
+          that.second++;
 
+      }
+      window.intervalId = setInterval(incrementNumber, 100);
+    console.log('==========CheckIn==============')
+    console.log(window.$potision)
+    console.log('============CheckIn============')
+  },
+  beforeMount(){
+    console.log('==========CheckIn==============')
+    console.log(window.$potision)
+    console.log('============CheckIn============')
+  },
+  mounted(){
+    console.log('==========CheckIn==============')
+    console.log(window.$potision)
+    console.log('============CheckIn============')
   }
 }
 </script>
