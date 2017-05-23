@@ -101,6 +101,8 @@ div.container{
   }
   .des{
     border-top:.1rem solid #c1c1c1;
+    padding-bottom: .4rem;
+    background: #ededed;
   }
   .btn{
     width:100%;
@@ -111,8 +113,8 @@ div.container{
     color: white;
     /*border: 1px solid black;*/
     background: #ff8e44;
-    position: absolute;
-    bottom: 0;
+    /*position: absolute;*/
+    /*bottom: 0;*/
   }
   
   

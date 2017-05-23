@@ -104,6 +104,9 @@ export default {
 </script>
 
 <style>
+iframe,#allmap{
+  display: none;
+}
 input{
   -webkit-appearance:none;
   outline:none;
@@ -122,16 +125,13 @@ p{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height:  100%;
-  /*border:2px solid red;*/
 }
 html{
   font-size: calc(100vw/3.75);
   height: 100%;
-  /*background-color: red;*/
 }
 body{
   font-size: 0.15rem;
   height: 100%;
-  /*background-color: blue;*/
 }
 </style>
