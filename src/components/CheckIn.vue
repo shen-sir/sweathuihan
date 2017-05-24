@@ -131,7 +131,7 @@ export default {
           that.second++;
 
       }
-      window.intervalId = setInterval(incrementNumber, 100);
+      window.intervalId = setInterval(incrementNumber, 1000);
     console.log('==========CheckIn==============')
     console.log(window.$potision)
     console.log('============CheckIn============')
