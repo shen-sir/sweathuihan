@@ -54,6 +54,11 @@ export default {
         for(var i=0;i<res.length;i++){
           res[i].pic = JSON.parse(res[i].pic);
         }
+        for(var i=0;i<res.length;i++){
+          for(var ii=0;ii<res[i].pic.length;ii++){
+            res[i].pic[ii] = 'http://upload.sweathuihan.com/'+res[i].pic[ii];
+          }
+        }
         // this.someData = response.body;
         that.list = res;
         // console.log(response)

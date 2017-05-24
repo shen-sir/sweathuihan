@@ -1,32 +1,32 @@
 <template>
   <div class="contain">
     <div class="head">
-      <img src="../assets/info.jpg" >
+      <img :src="data.head_img" >
     </div>
-    <p class="name"><span class="l"></span>苏格拉滴滴滴滴滴<span class="r"></span></p>
+    <p class="name"><span class="l"></span>{{data.nick_name}}<span class="r"></span></p>
     <div class="time">
       <span></span>
       <p>健身打卡</p>
     </div>
     <div class="svg">
+      <span>Jan</span>
       <span>Feb</span>
-      <span>Feb</span>
-      <span>Feb</span>
-      <span>Feb</span>
-      <span>Feb</span>
-      <span>Feb</span>
+      <span>Mar</span>
+      <span>Apr</span>
+      <span>May</span>
+      <span>June</span>
       <span>1</span>
       <span>2</span>
       <span>3</span>
       <span>4</span>
       <span>5</span>
       <span>6</span>
-      <span class="line2">Feb</span>
-      <span class="line2">Feb</span>
-      <span class="line2">Feb</span>
-      <span class="line2">Feb</span>
-      <span class="line2">Feb</span>
-      <span class="line2">Feb</span>
+      <span class="line2">July</span>
+      <span class="line2">Aug</span>
+      <span class="line2">Sept</span>
+      <span class="line2">Oct</span>
+      <span class="line2">Nov</span>
+      <span class="line2">Dec</span>
       <span>7</span>
       <span>8</span>
       <span>9</span>
@@ -110,14 +110,40 @@ export default {
   name: 'personal',
   data () {
     return {
-
+      data:null
     }
   },
   methods:{
     
   },
-  created(){
+  beforeCreate(){
+    if(localStorage.openId.slice(0,6) == 'invalid'){
+      this.$http.get('http://www.sweathuihan.com/wx/code?code='+window.location.href.split('code=')[1].split('&')[0]).then(response => {
+        // get body data
+        console.log('===========personal=============')
+        console.log(response)
+        localStorage.openId = response.body;
+        console.log('============personal============')
 
+      }, response => {
+        // error callback
+        alert('失败')
+      });
+    }
+  },
+  created(){
+    var that = this;
+    this.$http.get('http://www.sweathuihan.com/api/my?openId='+localStorage.openId).then(response => {
+        // get body data
+        console.log('===========personal=============')
+        console.log(response.body.data)
+        that.data = response.body.data;
+        console.log('============personal============')
+
+      }, response => {
+        // error callback
+        alert('失败')
+      });
   }
 }
 </script>

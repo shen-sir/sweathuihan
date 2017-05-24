@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="slider">
-      <img v-for="item in this.$route.query.imgs" :src="'http://upload.sweathuihan.com/'+item">
+    <div v-bind:style="{left:style.left+'px',width:style.width+'px'}" class="slider">
+      <img @touchstart="start" @touchmove="move" @touchend="end" v-for="item in this.$route.query.imgs" :src="item">
     </div>
     <p class="name">{{this.$route.query.name}}</p>
     <!-- <div class="tag">
@@ -33,7 +33,62 @@ export default {
   name: 'details',
   data () {
     return {
-      imgs: JSON.parse(this.$route.query.imgs)
+        imglength:this.$route.query.imgs.length,//图片数量
+        startPos:null,//取第一个touch的坐标值
+        isScrolling:0,//这个参数判断是垂直滚动还是水平滚动
+        endPos:null,
+        index:0,//当前显示元素的索引
+        viewWidth:window.innerWidth,//可见视口宽度
+        style:{   //更改的CSS样式
+          left:0,//#slider偏移量
+          width:window.innerWidth*this.$route.query.imgs.length,//#slider宽度
+        }
+    }
+  },
+  methods:{
+    start(event){
+      // console.log(event)
+      var touch = event.targetTouches[0]; //touches数组对象获得屏幕上所有的touch，取第一个touch
+      this.startPos = {x:touch.pageX,y:touch.pageY,time:+new Date}; //取第一个touch的坐标值
+      this.isScrolling = 0; //这个参数判断是垂直滚动还是水平滚动
+    },
+    move(event){
+      // console.log(event)
+      //当屏幕有多个touch或者页面被缩放过，就不执行move操作
+      if(event.targetTouches.length > 1 || event.scale && event.scale !== 1) return;
+      var touch = event.targetTouches[0];
+      this.endPos = {
+        x:touch.pageX - this.startPos.x,
+        y:touch.pageY - this.startPos.y
+      };
+      this.isScrolling = Math.abs(this.endPos.x) < Math.abs(this.endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
+      if(this.isScrolling === 0){
+        event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
+        // this.slider.className = 'cnt';
+        this.style.left = -this.index*this.viewWidth + this.endPos.x;
+      }
+    },
+    end(event){
+      // console.log(event)
+      var duration = +new Date - this.startPos.time; //滑动的持续时间
+      if(this.isScrolling === 0){ //当为水平滚动时
+        // this.icon[this.index].className = '';
+        if(Number(duration) > 10){
+          //判断是左移还是右移，当偏移量大于10时执行
+          if(this.endPos.x > 10){
+            if(this.index !== 0) this.index -= 1;
+          }else if(this.endPos.x < -10){
+            if(this.index !== this.imglength-1) this.index += 1;
+          }
+        }
+        // this.icon[this.index].className = 'curr';
+        // this.slider.className = 'cnt f-anim';
+        this.style.left = -this.index*this.viewWidth ;
+      }
+      //解绑事件
+      // this.slider.removeEventListener('touchmove',this,false);
+      // this.slider.removeEventListener('touchend',this,false);
+      
     }
   },
   created(){
@@ -45,6 +100,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped >
 div.container{
+  overflow-x: hidden;
   p{
     padding: .05rem 0.2rem;
   }
@@ -52,13 +108,16 @@ div.container{
   height: 100%;
   background: #ededed;
   div.slider{
+    transition: all 0.5s;
     position: relative;
     /*border: 1px solid red;*/
+    /*width: 3000px;*/
     height: 2.23rem;
     img{
-      width: 100%;
+      width: 100vw;
       height: 2.23rem;
-      position: absolute;
+      /*position: absolute;*/
+      float: left;
     }
   }
   .name{
@@ -101,7 +160,7 @@ div.container{
   }
   .des{
     border-top:.1rem solid #c1c1c1;
-    padding-bottom: .4rem;
+    padding-bottom: .8rem;
     background: #ededed;
   }
   .btn{
@@ -113,8 +172,8 @@ div.container{
     color: white;
     /*border: 1px solid black;*/
     background: #ff8e44;
-    /*position: absolute;*/
-    /*bottom: 0;*/
+    position: fixed;
+    bottom: 0;
   }
   
   

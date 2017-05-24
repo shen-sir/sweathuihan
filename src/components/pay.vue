@@ -1,7 +1,7 @@
 <template>
   <div class="contain">
     <div class="top">
-      <img :src="'http://upload.sweathuihan.com/'+this.$route.query.info.imgs[0]" class="left">
+      <img :src="this.$route.query.info.imgs[0]" class="left">
       <div class="right">
         <p class="name">{{this.$route.query.info.name}}</p>
         <p class="price">￥{{this.$route.query.info.money}}</p><span>每次奖励{{this.$route.query.info.daymoney}}元</span>

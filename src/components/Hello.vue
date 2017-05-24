@@ -7,7 +7,7 @@
     
       <div v-for="item in list"  class="contain">
         <router-link   :to="{ path: '/details', query: { vid:item.vid,name: item.name, money:item.money,daymoney:(Math.floor(item.money)/365).toFixed(2),location: item.location,phone:item.phone,imgs:item.pic}}">
-        <img :src="'http://upload.sweathuihan.com/'+ item.pic[0]" >
+        <img :src="item.pic[0]" >
         </router-link>
         <p class="name">{{item.name}}<span class="km">{{ (Math.floor(item.distance)/1000).toFixed(2)}}km</span><!-- <span class="one">{{item.location}}</span> -->
         <!-- <span class="two">泳</span> --></p>
