@@ -9,7 +9,7 @@
         <div class="kll">
           <p><span class="fire"></span>燃烧卡路里<span class="line2"></span><strong>{{Kcal}}</strong>/Kcal</p>
         </div>
-        <div class="num">
+        <!-- <div class="num">
           <div class="tex">
             <img class="icon" src="../assets/u1.png" >
             <p class="tit">运动时间</p>
@@ -28,10 +28,13 @@
             <img class="line" src="../assets/line.png" >
             <p><strong>{{money}}</strong>/Rmb</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div class="stop">结束健身</div>
+    <router-link   :to="{ path: href, query: {}}">
+      <div class="stop">{{btn}}</div>
+    </router-link>
+
   </div>
 </template>
 
@@ -44,9 +47,8 @@ export default {
       min:0,
       second:0,
       Kcal:0,
-      allmin:0,
-      money:0
-
+      btn:'结束健身',
+      href:'javascript:;'
     }
   },
   watch:{
@@ -57,8 +59,6 @@ export default {
         // alert('aaaaaa')
         this.second = 0;
         this.min++;
-        this.allmin++;
-        this.money++;
       }
     },
     min (val) {
@@ -89,21 +89,58 @@ export default {
         lat:r.point.lat
       };
       console.log($potision)
+      /*'http://www.sweathuihan.com/api/checkIn?currentLng='+r.point.lng + '&currentLat='+r.point.lat + '&openId='+localStorage.openId*/
+      that.$http.get('http://www.sweathuihan.com/api/checkIn?currentLng='+ 116.456427+ '&currentLat='+ 39.925253+ '&openId='+localStorage.openId).then(response => {
 
-      that.$http.get('http://www.sweathuihan.com/api/checkIn?currentLng='+r.point.lng + '&currentLat='+r.point.lat + '&openId='+localStorage.openId).then(response => {
-        // get body data
-        console.log('==========CheckIn==============')
-        console.log(response)
-        console.log('==========CheckIn==============')
+        //****超出打卡距离或场馆状态有误
+        if(response.body.code == '-6'||response.body.code == '-2'){
+          alert('打卡点超出距离')
+          that.btn = '重新打卡';
+          that.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect';
+          return
+        }
+
+        //*****已签入，获取当前状态
+        if(response.body.code == '-8'){
+          console.log(response.body.code)
+          that.$http.get('http://www.sweathuihan.com/api/nearbyAvailable?currentLng='+ 116.456427+ '&currentLat='+ 39.925253+'&openId=' +localStorage.openId).then(response => {
+            // get body data
+            console.log(response)
+            //健身的秒数
+            let now = Math.floor(response.body.data.now/1000) - Math.floor(response.body.data.venues.check_in_time/1000);
+            console.log(now)
+            that.second = now%60;
+            console.log(now)
+            //健身的分钟数
+            let mint = Math.floor(now/60);
+            console.log(mint)
+            if(mint>60){
+              that.min = mint%60;
+
+              that.hour = parseInt(mint/60);
+            }
+            that.setInterval();
+            that.href = '/CheckOut';
+
+          }, response => {
+            // error callback
+            alert('获取当前状态失败')
+          });
+        }
+
+        //******签入成功
+        if(response.body.code == '0'){
+          that.setInterval();
+          that.href = '/CheckOut';
+        }
 
       }, response => {
         // error callback
-        // alert('失败')
+        alert('签入失败')
       });
 
 
-    }
-    else {
+    }else {
       alert('failed'+this.getStatus());
     }        
   },{enableHighAccuracy: true})
@@ -117,34 +154,29 @@ export default {
   //BMAP_STATUS_PERMISSION_DENIED 没有权限。对应数值“6”。(自 1.1 新增)
   //BMAP_STATUS_SERVICE_UNAVAILABLE 服务不可用。对应数值“7”。(自 1.1 新增)
   //BMAP_STATUS_TIMEOUT 超时。对应数值“8”。(自 1.1 新增)
-  //
-  //
-  //
     
   },
   methods:{
-    
-  },
-  created(){
-    var that = this;
+    //计时器
+    setInterval(){
+      var that = this;
       function incrementNumber() {
           that.second++;
 
       }
       window.intervalId = setInterval(incrementNumber, 1000);
-    console.log('==========CheckIn==============')
-    console.log(window.$potision)
-    console.log('============CheckIn============')
+    }
+    
+  },
+  created(){
+    
+    
   },
   beforeMount(){
-    console.log('==========CheckIn==============')
-    console.log(window.$potision)
-    console.log('============CheckIn============')
+    
   },
   mounted(){
-    console.log('==========CheckIn==============')
-    console.log(window.$potision)
-    console.log('============CheckIn============')
+    
   }
 }
 </script>

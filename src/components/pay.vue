@@ -72,6 +72,7 @@ export default {
         // get body data
         // this.someData = response.body;
         console.log(response.body.data.result)
+        // that.$router.push({ path: '/success', query: {  }})
         wx.chooseWXPay({
             timestamp: response.body.data.result.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
             nonceStr: response.body.data.result.nonceStr, // 支付签名随机串，不长于 32 位
@@ -80,10 +81,12 @@ export default {
             paySign: response.body.data.result.paySign, // 支付签名
             success: function (res) {
                 // 支付成功后的回调函数
+                that.$router.push({ path: '/success', query: { }})
                 console.log(res)
                 that.$http.get('http://www.sweathuihan.com/callback/'+response.body.data.outer_id).then(response => {
                   // get body data
                   console.log(response)
+                  that.$router.push({ path: '/success', query: { plan: response }})
 
                 }, response => {
                   // error callback

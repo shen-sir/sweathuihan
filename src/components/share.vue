@@ -1,10 +1,10 @@
 <template>
   <div class="contain">
     <div class="head">
-        <img src="../assets/info.jpg" >
+        <img :src="headimg" >
     </div>
-    <p class="name"><span class="l"></span>苏格拉滴滴滴滴滴<span class="r"></span></p>
-    <h1 class="num">累计完成8次健身</h1>
+    <p class="name"><span class="l"></span>{{name}}<span class="r"></span></p>
+    <h1 class="num">累计完成{{days}}次健身</h1>
     <div class="derc">
       <span></span>
       No Pains No Gains
@@ -15,27 +15,29 @@
             <img class="icon" src="../assets/u1.png" >
             <p class="tit">运动时间</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{min}}</strong>/min</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u2.png" >
             <p class="tit">燃烧卡路里</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{Kcal}}</strong>/Kcal</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u3.png" >
             <p class="tit">赚取金钱</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{money}}</strong>/Rmb</p>
           </div>
     </div>
-    <div class="wx">
+    <!-- <div class="wx">
       请分享后到微信中查看奖励
-    </div>
-    <div class="btn">
-      即刻加入
-    </div>
+    </div> -->
+    <router-link   :to="{ path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html&response_type=code&scope=snsapi_base#wechat_redirect', query: {}}">
+      <div class="btn">
+        即刻加入
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -44,11 +46,35 @@ export default {
   name: 'share',
   data () {
     return {
+      name:'',
+      headimg:'',
+      days:0,
+      min:0,
+      Kcal:0,
+      money:0
 
     }
   },
   methods:{
     
+  },
+  beforeCreate(){
+    var that = this;
+    this.$http.get('http://www.sweathuihan.com/api/sharedInfo?openId=' + window.location.href.split('openId=')[1]).then(response => {
+            // get body data
+            console.log(response)
+            // alert(window.location.href.split('openId=')[1])
+            that.name = response.body.data.member_info.nickname;
+            that.headimg = response.body.data.member_info.headimg;
+            that.days = response.body.data.total_day;
+            that.min = response.body.data.total_mins;
+            that.Kcal = response.body.data.total_kcal;
+            that.money = response.body.data.total_money;
+
+          }, response => {
+            // error callback
+            alert('获取当前状态失败')
+          });
   },
   created(){
 
@@ -161,7 +187,7 @@ export default {
     text-align: center;;
     line-height: .5rem;
     font-weight: bold;
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 }

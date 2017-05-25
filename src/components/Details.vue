@@ -64,7 +64,6 @@ export default {
       this.isScrolling = Math.abs(this.endPos.x) < Math.abs(this.endPos.y) ? 1:0; //isScrolling为1时，表示纵向滑动，0为横向滑动
       if(this.isScrolling === 0){
         event.preventDefault(); //阻止触摸事件的默认行为，即阻止滚屏
-        // this.slider.className = 'cnt';
         this.style.left = -this.index*this.viewWidth + this.endPos.x;
       }
     },
@@ -81,8 +80,6 @@ export default {
             if(this.index !== this.imglength-1) this.index += 1;
           }
         }
-        // this.icon[this.index].className = 'curr';
-        // this.slider.className = 'cnt f-anim';
         this.style.left = -this.index*this.viewWidth ;
       }
       //解绑事件

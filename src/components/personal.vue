@@ -79,27 +79,27 @@
     </div>
     <div class="cardinfo">
       <div class="c">
-        <p class="title">远东健身房</p>
+        <p class="title">{{data.my_room[0].name}}</p>
         <div class="tex">
           <img class="icon" src="../assets/u1.png" >
           <p class="tit">运动时间</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
+          <p><strong>{{data.my_room[0].total_time}}</strong>/min</p>
         </div>
         <div class="tex">
           <img class="icon" src="../assets/u2.png" >
           <p class="tit">燃烧卡路里</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
+          <p><strong>{{data.my_room[0].total_cal}}</strong>/min</p>
         </div>
         <div class="tex">
           <img class="icon" src="../assets/u3.png" >
           <p class="tit">赚取金钱</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>362</strong>/min</p>
+          <p><strong>{{data.my_room[0].total_money}}</strong>/min</p>
         </div>
         <hr>
-        <p class="join">2018-2-16&nbsp&nbsp&nbsp&nbsp到期</p>
+        <p class="join">{{data.my_room[0].valid_date}}&nbsp&nbsp&nbsp&nbsp到期</p>
       </div>
     </div>
   </div>

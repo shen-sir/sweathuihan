@@ -6,26 +6,26 @@
             <img class="icon" src="../assets/u1.png" >
             <p class="tit">运动时间</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{min}}</strong>/Min</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u2.png" >
             <p class="tit">燃烧卡路里</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{Kcal}}</strong>/Kcal</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u3.png" >
             <p class="tit">赚取金钱</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>362</strong>/min</p>
+            <p><strong>{{money}}</strong>/Rmb</p>
           </div>
     </div>
     <div class="wx">
       请分享后到微信中查看奖励
     </div>
     <div class="btn">
-      分享
+      点击右上角分享得奖励
     </div>
   </div>
 </template>
@@ -35,14 +35,73 @@ export default {
   name: 'CheckOut',
   data () {
     return {
-
+      min:0,
+      money:0,
+      Kcal:0
     }
   },
   methods:{
     
   },
-  created(){
+  beforeCreate(){
+    var that = this;
+    this.$http.get('http://www.sweathuihan.com/api/checkOut?currentLng='+ 116.456427+ '&currentLat='+ 39.925253+'&openId=' +localStorage.openId).then(response => {
+            // get body data
+            console.log(response)
+            if(response.body.code == '-6'){
+              alert('打卡点超出范围')
+            }else if(response.body.code == '-2'){
+              alert('场馆状态有误')
+            }else if(response.body.code == '-9'){
+              alert('您还未签入')
+            }else if(response.body.code == '0'){
+              that.min = Math.floor(Math.floor(response.body.data.time/1000)/60)
+              that.money = response.body.data.money;
+            }else{
+              alert('未知异常')
+            }
 
+          }, response => {
+            // error callback
+            alert('获取当前状态失败')
+          });
+  },
+  created(){
+    var that = this;
+    wx.onMenuShareTimeline({
+          title: '靠身体赚钱！', // 分享标题
+          link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
+          success: function () { 
+              // 用户确认分享后执行的回调函数
+              that.$http.get('http://www.sweathuihan.com/api/shareFinished?openId=' +localStorage.openId).then(response => {
+                // get body data
+                console.log(response)
+                
+
+              }, response => {
+                // error callback
+                alert('分享告知服务器失败')
+              });
+          },
+          cancel: function () { 
+              // 用户取消分享后执行的回调函数
+          }
+      });
+    wx.onMenuShareAppMessage({
+        title: '靠身体赚钱！', // 分享标题
+        desc: '靠身体赚钱！', // 分享描述
+        link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () { 
+            // 用户确认分享后执行的回调函数
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    });
   }
 }
 </script>
@@ -62,7 +121,7 @@ export default {
   }
   .icon{
     .tex{
-        overflow-x: hidden;
+        /*overflow-x: hidden;*/
         width: 32.1%;
         height: 1.1rem;
         display: inline-block;
@@ -104,7 +163,7 @@ export default {
     text-align: center;;
     line-height: .5rem;
     font-weight: bold;
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 }
