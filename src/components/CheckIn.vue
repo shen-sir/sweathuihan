@@ -89,15 +89,22 @@ export default {
         lat:r.point.lat
       };
       console.log($potision)
+      // 正式
       /*'http://www.sweathuihan.com/api/checkIn?currentLng='+r.point.lng + '&currentLat='+r.point.lat + '&openId='+localStorage.openId*/
-      that.$http.get('http://www.sweathuihan.com/api/checkIn?currentLng='+ 116.456427+ '&currentLat='+ 39.925253+ '&openId='+localStorage.openId).then(response => {
+      // 测试
+      /*'http://www.sweathuihan.com/api/checkIn?currentLng='+ 116.456427+ '&currentLat='+ 39.925253+ '&openId='+localStorage.openId*/
+      that.$http.get('http://www.sweathuihan.com/api/checkIn?currentLng='+r.point.lng + '&currentLat='+r.point.lat + '&openId='+localStorage.openId).then(response => {
 
         //****超出打卡距离或场馆状态有误
-        if(response.body.code == '-6'||response.body.code == '-2'){
+        if(response.body.code == '-6'){
           alert('打卡点超出距离')
           that.btn = '重新打卡';
-          that.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect';
+          /*that.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect';*/
           return
+        }else if(response.body.code == '-2'||response.body.code == '-4'||response.body.code == '-7'){
+          alert('您还未购卡')
+          that.btn = '前往场馆';
+          that.href = '/';
         }
 
         //*****已签入，获取当前状态

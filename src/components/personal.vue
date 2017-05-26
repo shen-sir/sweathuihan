@@ -78,28 +78,28 @@
       <p>我的健身房</p>
     </div>
     <div class="cardinfo">
-      <div class="c">
-        <p class="title">{{data.my_room[0].name}}</p>
+      <div v-for="item in data.my_room" class="c">
+        <p class="title">{{item.name}}</p>
         <div class="tex">
           <img class="icon" src="../assets/u1.png" >
           <p class="tit">运动时间</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>{{data.my_room[0].total_time}}</strong>/min</p>
+          <p><strong>{{item.total_time}}</strong>/min</p>
         </div>
         <div class="tex">
           <img class="icon" src="../assets/u2.png" >
           <p class="tit">燃烧卡路里</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>{{data.my_room[0].total_cal}}</strong>/min</p>
+          <p><strong>{{item.total_cal}}</strong>/min</p>
         </div>
         <div class="tex">
           <img class="icon" src="../assets/u3.png" >
           <p class="tit">赚取金钱</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>{{data.my_room[0].total_money}}</strong>/min</p>
+          <p><strong>{{item.total_money}}</strong>/min</p>
         </div>
         <hr>
-        <p class="join">{{data.my_room[0].valid_date}}&nbsp&nbsp&nbsp&nbsp到期</p>
+        <p class="join">{{item.valid_date}}&nbsp&nbsp&nbsp&nbsp到期</p>
       </div>
     </div>
   </div>
@@ -110,7 +110,11 @@ export default {
   name: 'personal',
   data () {
     return {
-      data:null
+      data:{
+        head_img:'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0',
+        nick_name:'大挥汗',
+        my_room:[],
+      }
     }
   },
   methods:{
@@ -138,6 +142,9 @@ export default {
         console.log('===========personal=============')
         console.log(response.body.data)
         that.data = response.body.data;
+        if(that.data.my_room.length == 0){
+          that.$router.push({ path: '/' })
+        }
         console.log('============personal============')
 
       }, response => {
@@ -244,6 +251,7 @@ export default {
       border-radius: .2rem;
       border:1px solid white;
       margin: 0 auto;
+      margin-bottom: .2rem;
       .title{
         font-size: .15rem;
         color: white;

@@ -11,7 +11,7 @@
     <p class="price">￥{{this.$route.query.money}}</p>
     <p class="reward"><span>每次奖励{{this.$route.query.daymoney}}元</span></p>
     <p class="position"><span></span>{{this.$route.query.location}}</p>
-    <p class="tel">{{this.$route.query.phone}}</p>
+    <a :href="'tel:'+this.$route.query.phone"><p class="tel">{{this.$route.query.phone}}</p></a>
     <div class="des">
       <p class="titel">使用说明</p>
       <p class="text">1.完成购买后，您将收到确认信息和验证码
@@ -96,6 +96,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped >
+a{
+  color:black;
+}
 div.container{
   overflow-x: hidden;
   p{

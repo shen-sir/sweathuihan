@@ -33,7 +33,7 @@
     <!-- <div class="wx">
       请分享后到微信中查看奖励
     </div> -->
-    <router-link   :to="{ path: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html&response_type=code&scope=snsapi_base#wechat_redirect', query: {}}">
+    <router-link   :to="{ path: '/', query: {}}">
       <div class="btn">
         即刻加入
       </div>
