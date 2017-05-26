@@ -19,7 +19,7 @@ export default {
         // get body data
         console.log('========================')
         console.log(response)
-        localStorage.openId = response.body;
+        localStorage.openId = response.body.data.openId;
         console.log('========================')
 
       }, response => {

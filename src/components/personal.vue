@@ -126,7 +126,7 @@ export default {
         // get body data
         console.log('===========personal=============')
         console.log(response)
-        localStorage.openId = response.body;
+        localStorage.openId = response.body.data.openId;
         console.log('============personal============')
 
       }, response => {
