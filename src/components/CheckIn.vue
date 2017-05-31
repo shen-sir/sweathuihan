@@ -276,7 +276,7 @@ export default {
   .stop{
     width: 100%;
     height: .50rem;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     background-color: #ff7723;
     font-size: .16rem;

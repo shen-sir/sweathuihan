@@ -12,8 +12,8 @@
         <p class="text">1.完成购买后，您将收到确认信息和验证码
         <br>2.凭验证码到对应场馆换取您的健身卡
         <br>3.在您未验证健身卡之前可以随时退款
-        <br>4.客服联系方式：通过Sweet挥汗公众号留言或拨打客服电话 </p>
-        <p class="tel">{{this.$route.query.info.phone}}</p>
+        <br>4.客服联系方式：通过Sweat挥汗公众号留言或拨打客服电话 </p>
+        <a :href="'tel:' + this.$route.query.info.phone"><p class="tel">{{this.$route.query.info.phone}}</p></a>
     </div>
     <div class="inp">
       <div class="line">
@@ -83,7 +83,7 @@ export default {
                 // 支付成功后的回调函数
                 that.$router.push({ path: '/success', query: { }})
                 console.log(res)
-                that.$http.get('http://www.sweathuihan.com/callback/'+response.body.data.outer_id).then(response => {
+                that.$http.get('http://www.sweathuihan.com/wx/callback/'+response.body.data.outer_id).then(response => {
                   // get body data
                   console.log(response)
                   that.$router.push({ path: '/success', query: { plan: response }})
@@ -170,7 +170,7 @@ div.contain{
         width: 1.7rem;
         border: 0;
         display: inline-block;
-        text-align: center;
+        /*text-align: center;*/
       }
       .btn{
         width: .9rem;
@@ -188,7 +188,7 @@ div.contain{
     color: white;
     font-size: .24rem;
     line-height: .5rem;
-    position: absolute;
+    position: fixed;
     bottom: 0;
   }
 }
