@@ -90,13 +90,13 @@
           <img class="icon" src="../assets/u2.png" >
           <p class="tit">燃烧卡路里</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>{{item.total_cal}}</strong>/min</p>
+          <p><strong>{{item.total_cal}}</strong>/Kcal</p>
         </div>
         <div class="tex">
           <img class="icon" src="../assets/u3.png" >
           <p class="tit">赚取金钱</p>
           <img class="line" src="../assets/line.png" >
-          <p><strong>{{item.total_money}}</strong>/min</p>
+          <p><strong>{{item.total_money}}</strong>/Rmb</p>
         </div>
         <hr>
         <p class="join">{{item.valid_date}}&nbsp&nbsp&nbsp&nbsp到期</p>

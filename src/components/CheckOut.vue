@@ -12,7 +12,7 @@
             <img class="icon" src="../assets/u2.png" >
             <p class="tit">燃烧卡路里</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>{{Kcal}}</strong>/Kcal</p>
+            <p><strong>{{Kcal}}</strong>/Cal</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u3.png" >
@@ -22,10 +22,10 @@
           </div>
     </div>
     <div class="wx">
-      请分享后到微信中查看奖励
+      {{text}}
     </div>
     <div class="btn">
-      点击右上角分享得奖励
+      {{sharetext}}
     </div>
   </div>
 </template>
@@ -37,7 +37,9 @@ export default {
     return {
       min:0,
       money:0,
-      Kcal:0
+      Kcal:0,
+      text:'请分享后到微信中查看奖励',
+      sharetext:'点击右上角分享得奖励',
     }
   },
   methods:{
@@ -72,9 +74,13 @@ export default {
             }else if(response.body.code == '-9'){
               alert('您还未签入')
             }else if(response.body.code == '0'){
-              that.min = Math.floor(Math.floor(response.body.data.time/1000)/60)
-              that.money = response.body.data.money;
-              that.Kcal = (response.body.data.time*9525)/10000000;
+              that.min = Math.floor(Math.floor(response.body.data.time/1000)/60).toFixed(2);
+              that.money = response.body.data.money.toFixed(2);
+              that.Kcal = ((response.body.data.time*2091)/10000000).toFixed(2);
+              if(that.min<60){
+                that.text = '运动时间超过60分钟才可获得奖励哦~';
+                that.sharetext = '点击右上角分享';
+              }
             }else{
               alert('未知异常')
             }

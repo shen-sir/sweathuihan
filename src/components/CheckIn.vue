@@ -7,7 +7,7 @@
           <h1>{{hour}}:{{min}}:{{second}}<span></span></h1>
         </div>
         <div class="kll">
-          <p><span class="fire"></span>燃烧卡路里<span class="line2"></span><strong>{{Kcal}}</strong>/Kcal</p>
+          <p><span class="fire"></span>燃烧卡路里<span class="line2"></span><strong>{{Kcal}}</strong>/Cal</p>
         </div>
         <!-- <div class="num">
           <div class="tex">
@@ -31,9 +31,9 @@
         </div> -->
       </div>
     </div>
-    <router-link   :to="{ path: href, query: {}}">
-      <div class="stop">{{btn}}</div>
-    </router-link>
+    <!-- <router-link   :to="{ path: href, query: {}}"> -->
+      <div @click="link" class="stop">{{btn}}</div>
+    <!-- </router-link> -->
 
   </div>
 </template>
@@ -46,6 +46,7 @@ export default {
       hour:0,
       min:0,
       second:0,
+      allsecond:0,
       Kcal:0,
       btn:'结束健身',
       href:'javascript:;'
@@ -54,7 +55,8 @@ export default {
   watch:{
    second (val) {
     var that = this;
-      this.Kcal++;
+      this.allsecond++;
+      this.Kcal = ((this.allsecond*9525)/10000).toFixed(2);
       if(val == 60){
         // alert('aaaaaa')
         this.second = 0;
@@ -117,18 +119,24 @@ export default {
             //健身的秒数
             let now = Math.floor(response.body.data.now/1000) - Math.floor(response.body.data.venues.check_in_time/1000);
             console.log(now)
+            that.allsecond = now;
             that.second = now%60;
             console.log(now)
             //健身的分钟数
             let mint = Math.floor(now/60);
             console.log(mint)
+            console.log(mint>60)
             if(mint>60){
+               console.log('=======mint>60= 应显示小时=====')
               that.min = mint%60;
 
               that.hour = parseInt(mint/60);
+            }else{
+              console.log('======else==不显示小时=====')
+              that.min = mint;
             }
             that.setInterval();
-            that.href = '/CheckOut';
+            // that.href = '/CheckOut';
 
           }, response => {
             // error callback
@@ -139,7 +147,7 @@ export default {
         //******签入成功
         if(response.body.code == '0'){
           that.setInterval();
-          that.href = '/CheckOut';
+          // that.href = '/CheckOut';
         }
 
       }, response => {
@@ -173,6 +181,14 @@ export default {
 
       }
       window.intervalId = setInterval(incrementNumber, 1000);
+    },
+    link(){
+      if(confirm('签退后再次签入则会重新计时，确定签退？')){
+        this.$router.push({ path: '/CheckOut', query: { }})
+      }else{
+        return;
+      }
+      
     }
     
   },
