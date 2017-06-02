@@ -2,7 +2,7 @@
   <div class="contain">
     <h1 class="yes">支付成功!</h1>
     <div class="code">
-      <span>请查看短信验证码</span>
+      <span>{{code}}</span>
     </div>
     <h1 class="tip">请到店出示验证码即可换取健身卡</h1>
     <div class="btn">
@@ -16,7 +16,7 @@ export default {
   name: 'success',
   data () {
     return {
-
+      code:this.$route.query.plan
     }
   },
   methods:{

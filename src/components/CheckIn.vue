@@ -56,7 +56,7 @@ export default {
    second (val) {
     var that = this;
       this.allsecond++;
-      this.Kcal = ((this.allsecond*9525)/10000).toFixed(2);
+      this.Kcal = ((this.allsecond*2125)/10000).toFixed(2);
       if(val == 60){
         // alert('aaaaaa')
         this.second = 0;

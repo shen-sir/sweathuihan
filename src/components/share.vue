@@ -21,7 +21,7 @@
             <img class="icon" src="../assets/u2.png" >
             <p class="tit">燃烧卡路里</p>
             <img class="line" src="../assets/line.png" >
-            <p><strong>{{Kcal}}</strong>/Kcal</p>
+            <p><strong>{{Kcal}}</strong>/Cal</p>
           </div>
           <div class="tex">
             <img class="icon" src="../assets/u3.png" >
