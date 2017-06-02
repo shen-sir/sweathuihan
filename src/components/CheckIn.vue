@@ -101,7 +101,7 @@ export default {
         if(response.body.code == '-6'){
           alert('打卡点超出距离')
           that.btn = '重新打卡';
-          that.href = '/CheckIn';
+          // that.href = '/CheckIn';
           /*that.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect';*/
           return
         }else if(response.body.code == '-2'||response.body.code == '-4'||response.body.code == '-7'){
@@ -135,6 +135,8 @@ export default {
               console.log('======else==不显示小时=====')
               that.min = mint;
             }
+            alert(JSON.stringify(response));
+            alert('已迁入继续计时')
             that.setInterval();
             // that.href = '/CheckOut';
 
@@ -146,6 +148,8 @@ export default {
 
         //******签入成功
         if(response.body.code == '0'){
+          alert(JSON.stringify(response));
+          alert('迁入成功开始计时')
           that.setInterval();
           // that.href = '/CheckOut';
         }
@@ -183,8 +187,13 @@ export default {
       window.intervalId = setInterval(incrementNumber, 1000);
     },
     link(){
-      if(confirm('签退后再次签入则会重新计时，确定签退？')){
-        this.$router.push({ path: '/CheckOut', query: { }})
+      if( this.btn == '结束健身'){
+        if(confirm('签退后再次签入则会重新计时，确定签退？')){
+          this.$router.push({ path: '/CheckOut', query: { }})
+        }
+        
+      }else if(this.btn == '重新打卡'){
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect"
       }else{
         return;
       }

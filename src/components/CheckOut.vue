@@ -74,8 +74,9 @@ export default {
             }else if(response.body.code == '-9'){
               alert('您还未签入')
             }else if(response.body.code == '0'){
-              that.min = Math.floor(Math.floor(response.body.data.time/1000)/60).toFixed(2);
-              that.money = response.body.data.money.toFixed(2);
+              console.log(response.body.data.time+ '===time')
+              that.min = (Math.floor(response.body.data.time/1000)/60).toFixed(2);
+              that.money = response.body.data.money;
               that.Kcal = ((response.body.data.time*2091)/10000000).toFixed(2);
               if(that.min<60){
                 that.text = '运动时间超过60分钟才可获得奖励哦~';
@@ -114,7 +115,7 @@ export default {
     var that = this;
     alert(typeof wx);
     wx.onMenuShareTimeline({
-          title: '靠身体赚钱！', // 分享标题
+          title: '震惊！这家伙居然靠身体赚钱！', // 分享标题
           link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
           success: function () { 
@@ -136,8 +137,8 @@ export default {
           }
       });
     wx.onMenuShareAppMessage({
-        title: '靠身体赚钱！', // 分享标题
-        desc: '靠身体赚钱！', // 分享描述
+        title: '震惊！这家伙居然靠身体赚钱！', // 分享标题
+        desc: '男人看了会沉默，女人看了会流泪！这么累的事情竟然天天去，原来是因为......', // 分享描述
         link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
         imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
         type: '', // 分享类型,music、video或link，不填默认为link
@@ -157,12 +158,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less' scoped >
 .contain{
+  text-align: center;
   color: white;
   overflow-x: hidden;
   height: 100%;
   background: url(../assets/cbg.jpg) center center / cover no-repeat;
   h1{
-    margin-top: 2.8rem;
+    margin-top: 2.5rem;
     font-size: .18rem;
     padding-left: .12rem;
     margin-bottom: .3rem;
@@ -192,7 +194,9 @@ export default {
       }
   }
   .wx{
-    width: 2.57rem;
+    /*width: 2.57rem;*/
+    display: inline-block;
+    padding: 0 .2rem 0 .2rem;
     height: .4rem;
     background: white;
     border-radius: .20rem;
