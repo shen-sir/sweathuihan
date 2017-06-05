@@ -43,7 +43,47 @@ export default {
     }
   },
   methods:{
-    
+    wxhand(e){
+      var that = this;
+    // alert(typeof wx);
+    wx.onMenuShareTimeline({
+          title: '震惊！'+ e.member_info.nickname +'居然靠身体赚钱！', // 分享标题
+          link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: e.member_info.headimg, // 分享图标
+          success: function () { 
+              // 用户确认分享后执行的回调函数
+              that.$http.get('http://www.sweathuihan.com/api/shareFinished?openId=' +localStorage.openId).then(response => {
+                // get body data
+                console.log(response)
+                alert('分享到朋友圈成功')
+                // alert(JSON.stringify(response))
+
+              }, response => {
+                // error callback
+                alert('分享告知服务器失败')
+              });
+          },
+          cancel: function () { 
+            alert('取消分享')
+              // 用户取消分享后执行的回调函数
+          }
+      });
+    wx.onMenuShareAppMessage({
+        title: '震惊！'+ e.member_info.nickname +'居然靠身体赚钱！', // 分享标题
+        desc: '男人看了会沉默，女人看了会流泪！这么累的事情竟然天天去，原来是因为......', // 分享描述
+        link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: e.member_info.headimg, // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () { 
+            // 用户确认分享后执行的回调函数
+            alert('分享到朋友成功')
+        },
+        cancel: function () { 
+            // 用户取消分享后执行的回调函数
+        }
+    });
+    }
   },
   beforeCreate(){
     var that = this;
@@ -78,6 +118,7 @@ export default {
               that.min = (Math.floor(response.body.data.time/1000)/60).toFixed(2);
               that.money = response.body.data.money;
               that.Kcal = ((response.body.data.time*2091)/10000000).toFixed(2);
+              that.wxhand(response.body.data)
               if(that.min<60){
                 that.text = '运动时间超过60分钟才可获得奖励哦~';
                 that.sharetext = '点击右上角分享';
@@ -112,45 +153,7 @@ export default {
 
   },
   created(){
-    var that = this;
-    alert(typeof wx);
-    wx.onMenuShareTimeline({
-          title: '震惊！这家伙居然靠身体赚钱！', // 分享标题
-          link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
-          success: function () { 
-              // 用户确认分享后执行的回调函数
-              that.$http.get('http://www.sweathuihan.com/api/shareFinished?openId=' +localStorage.openId).then(response => {
-                // get body data
-                console.log(response)
-                alert('分享到朋友圈成功')
-                // alert(JSON.stringify(response))
-
-              }, response => {
-                // error callback
-                alert('分享告知服务器失败')
-              });
-          },
-          cancel: function () { 
-            alert('取消分享')
-              // 用户取消分享后执行的回调函数
-          }
-      });
-    wx.onMenuShareAppMessage({
-        title: '震惊！这家伙居然靠身体赚钱！', // 分享标题
-        desc: '男人看了会沉默，女人看了会流泪！这么累的事情竟然天天去，原来是因为......', // 分享描述
-        link: 'http://www.sweathuihan.com/dist/index.html#/share?openId='+localStorage.openId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-        imgUrl: 'http://wx.qlogo.cn/mmopen/CJ35Z2cnZA3A5GESwjNffrKpWybv5OfeiaNZYFP3ibmR4d5j35FvM2IHwG8A0mNh9TYK0XibzibNHhUktGbaCOqyyQ/0', // 分享图标
-        type: '', // 分享类型,music、video或link，不填默认为link
-        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-        success: function () { 
-            // 用户确认分享后执行的回调函数
-            alert('分享到朋友成功')
-        },
-        cancel: function () { 
-            // 用户取消分享后执行的回调函数
-        }
-    });
+    
   }
 }
 </script>

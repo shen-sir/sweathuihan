@@ -1,9 +1,9 @@
 <template>
   <div class="hello">
-    <div class="search">
+    <!-- <div class="search">
       <input placeholder="查找附近场馆" type="text">
       <img src="../assets/search.png">
-    </div>
+    </div> -->
     
       <div v-for="item in list"  class="contain">
         <router-link   :to="{ path: '/details', query: { vid:item.vid,name: item.name, money:item.money,daymoney:(Math.floor(item.money)/365).toFixed(2),location: item.location,phone:item.phone,imgs:item.pic}}">
@@ -11,7 +11,8 @@
         </router-link>
         <p class="name">{{item.name}}<span class="km">{{ (Math.floor(item.distance)/1000).toFixed(2)}}km</span><!-- <span class="one">{{item.location}}</span> -->
         <!-- <span class="two">泳</span> --></p>
-        <p class="price">￥{{item.money}} <span>每次奖励{{(Math.floor(item.money)/365).toFixed(2)}}元</span>  </p>
+        <p class="reward">每次奖励{{(Math.floor(item.money)/365).toFixed(2)}}元</p>
+        <p class="price">{{item.money}}&nbsp 元/位<span></span>  </p>
       </div>
     
     
@@ -63,7 +64,7 @@ div.hello{
     font-size: .15rem;
     background: white;
     padding-bottom: .1rem;
-    margin-bottom: .1rem;
+    /*margin-bottom: .1rem;*/
     img{
       width: 100%;
       height: 2.23rem;
@@ -89,8 +90,14 @@ div.hello{
         padding: 0px 3px;
       }
     }
+    .reward{
+      font-size: .12rem;
+      color: #999999;
+    }
     .price{
+      color: #ff3939;
       padding-top: .05rem;
+      font-size: .12rem;
       span{
         color: #999999;
       }
