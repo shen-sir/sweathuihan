@@ -33,16 +33,16 @@ export default {
 
 
     // 百度地图API功能
-  var map = new BMap.Map("allmap");
-  var point = new BMap.Point(116.331398,39.897445);
-  map.centerAndZoom(point,12);
+  // var map = new BMap.Map("allmap");
+  // var point = new BMap.Point(116.331398,39.897445);
+  // map.centerAndZoom(point,12);
   var that = this;
   var geolocation = new BMap.Geolocation();
   geolocation.getCurrentPosition(function(r){
     if(this.getStatus() == BMAP_STATUS_SUCCESS){
       var mk = new BMap.Marker(r.point);
-      map.addOverlay(mk);
-      map.panTo(r.point);
+      // map.addOverlay(mk);
+      // map.panTo(r.point);
       // alert('您的位置：'+r.point.lng+','+r.point.lat);
       window.$potision={
         lng:r.point.lng,
@@ -116,6 +116,10 @@ export default {
 a{
   text-decoration:none;
 }
+*:active{
+  background: white;
+}
+a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
 iframe,#allmap{
   display: none;
 }
