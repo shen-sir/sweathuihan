@@ -116,9 +116,6 @@ export default {
 a{
   text-decoration:none;
 }
-*:active{
-  background: white;
-}
 a,button,input{-webkit-tap-highlight-color:rgba(255,0,0,0);}
 iframe,#allmap{
   display: none;
