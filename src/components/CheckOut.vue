@@ -60,7 +60,7 @@ export default {
 
               }, response => {
                 // error callback
-                alert('分享告知服务器失败')
+                alert('分享告知服务器失败，请尝试再次分享')
               });
           },
           cancel: function () { 
@@ -153,7 +153,10 @@ export default {
 
   },
   created(){
-    
+    window.addEventListener("popstate", function(e) { 
+      // alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能 
+      window._popstate = false;
+    }, false);
   }
 }
 </script>

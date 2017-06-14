@@ -71,6 +71,9 @@ export default {
     }
   },
   beforeCreate(){
+    if(window._popstate == false){
+      return
+    }
     var that = this;
 
     // 百度地图API功能
@@ -101,8 +104,6 @@ export default {
         if(response.body.code == '-6'){
           alert('打卡点超出距离')
           that.btn = '重新打卡';
-          // that.href = '/CheckIn';
-          /*that.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbde5addacdc4f255&redirect_uri=http%3a%2f%2fsweathuihan.com%2fdist%2findex.html%23%2fCheckIn&response_type=code&scope=snsapi_base#wechat_redirect';*/
           return
         }else if(response.body.code == '-2'||response.body.code == '-4'||response.body.code == '-7'){
           alert('您还未购卡')
@@ -201,7 +202,10 @@ export default {
     
   },
   created(){
-    
+    if(window._popstate == false){
+      this.btn = '重新打卡';
+      return
+    }
     
   },
   beforeMount(){

@@ -202,11 +202,8 @@ export default {
       this.sliderIndex.push(false)
     }
     this.sliderIndex[0] = true;
-
-
-  
-
-
+    //调整滚动条
+    document.body.scrollTop = 0;
   },
   mounted(){
     // 百度地图API功能
